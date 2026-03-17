@@ -35,7 +35,7 @@ function App() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Clinical Intelligence Platform</h1>
-                <p className="text-sm text-slate-500 font-medium">AI-Powered Patient Analytics & Predictive Medicine</p>
+                <p className="text-sm text-slate-500 font-medium">Scientific Intelligence Layer for Medical Affairs</p>
               </div>
             </div>
             <div className="flex items-center space-x-6">

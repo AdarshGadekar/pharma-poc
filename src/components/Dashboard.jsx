@@ -1,6 +1,7 @@
 import { Heart, Brain, Activity, Shield, TrendingUp, Users, Microscope, AlertCircle } from 'lucide-react'
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts'
 import { therapeuticAreas, populationInsights, drugPerformanceData } from '../data/syntheticData'
+import ScientificKPIPanel from './ScientificKPIPanel'
 
 const Dashboard = () => {
   const outcomeData = [
@@ -34,6 +35,8 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
+      <ScientificKPIPanel />
+      
       <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
         <h2 className="text-3xl font-bold mb-2 text-slate-900">Clinical Intelligence Dashboard</h2>
         <p className="text-slate-600 text-lg">
