@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import { Microscope, TrendingUp, DollarSign, Clock, Activity, Target } from 'lucide-react'
 import { BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts'
 import { biomarkerInsights, drugPerformanceData } from '../data/syntheticData'
+import BiomarkerAIPanel from './BiomarkerAIPanel'
 
 const BiomarkerInsightsView = () => {
+  const [selectedBiomarker, setSelectedBiomarker] = useState(biomarkerInsights[0])
   const biomarkerComparison = biomarkerInsights.map(b => ({
     name: b.biomarker.split(' ')[0],
     predictive: b.predictiveValue === 'High' ? 90 : 70,
@@ -19,20 +22,14 @@ const BiomarkerInsightsView = () => {
   }))
 
   const getTherapeuticColor = (area) => {
-    switch (area) {
-      case 'Oncology': return 'from-blue-500 to-indigo-600'
-      case 'Neurology': return 'from-purple-500 to-pink-600'
-      case 'Cardiology': return 'from-pink-500 to-rose-600'
-      case 'Immunology': return 'from-amber-500 to-orange-600'
-      default: return 'from-slate-500 to-slate-600'
-    }
+    return 'from-slate-600 to-slate-700'
   }
 
   return (
     <div className="space-y-6">
-      <div className="card bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-        <h2 className="text-3xl font-bold mb-2">Biomarker Intelligence</h2>
-        <p className="text-purple-100 text-lg">
+      <div className="card bg-white border border-slate-200">
+        <h2 className="text-3xl font-bold mb-2 text-slate-900">Biomarker Intelligence</h2>
+        <p className="text-slate-600 text-lg">
           Predictive biomarkers driving precision medicine and personalized treatment strategies
         </p>
       </div>
@@ -72,9 +69,9 @@ const BiomarkerInsightsView = () => {
               <PolarGrid stroke="#e2e8f0" />
               <PolarAngleAxis dataKey="name" tick={{ fontSize: 12 }} />
               <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10 }} />
-              <Radar name="Predictive Value" dataKey="predictive" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.4} />
-              <Radar name="Clinical Utility" dataKey="utility" stroke="#0ea5e9" fill="#0ea5e9" fillOpacity={0.4} />
-              <Radar name="Turnaround" dataKey="turnaround" stroke="#10b981" fill="#10b981" fillOpacity={0.4} />
+              <Radar name="Predictive Value" dataKey="predictive" stroke="#475569" fill="#475569" fillOpacity={0.4} />
+              <Radar name="Clinical Utility" dataKey="utility" stroke="#64748b" fill="#64748b" fillOpacity={0.4} />
+              <Radar name="Turnaround" dataKey="turnaround" stroke="#94a3b8" fill="#94a3b8" fillOpacity={0.4} />
               <Legend />
               <Tooltip />
             </RadarChart>
@@ -92,7 +89,7 @@ const BiomarkerInsightsView = () => {
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                 formatter={(value) => `${value}%`}
               />
-              <Bar dataKey="outcomeImprovement" fill="#10b981" radius={[0, 8, 8, 0]} />
+              <Bar dataKey="outcomeImprovement" fill="#475569" radius={[0, 8, 8, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -128,15 +125,17 @@ const BiomarkerInsightsView = () => {
               }}
             />
             <Legend />
-            <Scatter name="Biomarkers" data={costEffectivenessData} fill="#8b5cf6">
+            <Scatter name="Biomarkers" data={costEffectivenessData} fill="#475569">
               {costEffectivenessData.map((entry, index) => {
-                const colors = ['#0ea5e9', '#8b5cf6', '#ec4899', '#f59e0b']
+                const colors = ['#475569', '#64748b', '#94a3b8', '#cbd5e1']
                 return <circle key={index} fill={colors[index]} />
               })}
             </Scatter>
           </ScatterChart>
         </ResponsiveContainer>
       </div>
+
+      <BiomarkerAIPanel biomarkerData={selectedBiomarker} />
 
       <div className="grid grid-cols-2 gap-6">
         {biomarkerInsights.map((biomarker, index) => (

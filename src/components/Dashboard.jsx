@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const ageDistribution = populationInsights.demographicBreakdown.ageGroups
 
-  const COLORS = ['#0ea5e9', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981']
+  const COLORS = ['#475569', '#64748b', '#94a3b8', '#cbd5e1', '#e2e8f0']
 
   const getTherapeuticIcon = (name) => {
     const icons = {
@@ -34,43 +34,43 @@ const Dashboard = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-8 text-white">
-        <h2 className="text-3xl font-bold mb-2">Clinical Intelligence Dashboard</h2>
-        <p className="text-blue-100 text-lg">
+      <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-sm">
+        <h2 className="text-3xl font-bold mb-2 text-slate-900">Clinical Intelligence Dashboard</h2>
+        <p className="text-slate-600 text-lg">
           Real-time insights from {populationInsights.totalPatients.toLocaleString()} patient journeys across {populationInsights.therapeuticAreas} therapeutic areas
         </p>
         <div className="grid grid-cols-4 gap-6 mt-6">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <Users className="w-6 h-6 text-blue-200" />
-              <span className="text-xs text-blue-200">Total</span>
+              <Users className="w-6 h-6 text-slate-600" />
+              <span className="text-xs text-slate-500 uppercase tracking-wide">Total</span>
             </div>
-            <div className="text-3xl font-bold">{populationInsights.totalPatients.toLocaleString()}</div>
-            <div className="text-sm text-blue-200">Patients Enrolled</div>
+            <div className="text-3xl font-bold text-slate-900">{populationInsights.totalPatients.toLocaleString()}</div>
+            <div className="text-sm text-slate-600">Patients Enrolled</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <Activity className="w-6 h-6 text-blue-200" />
-              <span className="text-xs text-blue-200">Active</span>
+              <Activity className="w-6 h-6 text-slate-600" />
+              <span className="text-xs text-slate-500 uppercase tracking-wide">Active</span>
             </div>
-            <div className="text-3xl font-bold">{populationInsights.activeStudies}</div>
-            <div className="text-sm text-blue-200">Clinical Studies</div>
+            <div className="text-3xl font-bold text-slate-900">{populationInsights.activeStudies}</div>
+            <div className="text-sm text-slate-600">Clinical Studies</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <Microscope className="w-6 h-6 text-blue-200" />
-              <span className="text-xs text-blue-200">Tracked</span>
+              <Microscope className="w-6 h-6 text-slate-600" />
+              <span className="text-xs text-slate-500 uppercase tracking-wide">Tracked</span>
             </div>
-            <div className="text-3xl font-bold">{populationInsights.biomarkersTracked}</div>
-            <div className="text-sm text-blue-200">Biomarkers</div>
+            <div className="text-3xl font-bold text-slate-900">{populationInsights.biomarkersTracked}</div>
+            <div className="text-sm text-slate-600">Biomarkers</div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+          <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <TrendingUp className="w-6 h-6 text-blue-200" />
-              <span className="text-xs text-blue-200">Avg</span>
+              <TrendingUp className="w-6 h-6 text-slate-600" />
+              <span className="text-xs text-slate-500 uppercase tracking-wide">Avg</span>
             </div>
-            <div className="text-3xl font-bold">{populationInsights.averageFollowUp}</div>
-            <div className="text-sm text-blue-200">Months Follow-up</div>
+            <div className="text-3xl font-bold text-slate-900">{populationInsights.averageFollowUp}</div>
+            <div className="text-sm text-slate-600">Months Follow-up</div>
           </div>
         </div>
       </div>
@@ -79,12 +79,7 @@ const Dashboard = () => {
         {therapeuticAreas.map((area, index) => (
           <div key={area.id} className="card hover:shadow-lg transition-shadow cursor-pointer">
             <div className="flex items-center justify-between mb-4">
-              <div className={`p-3 rounded-lg ${
-                index === 0 ? 'bg-blue-100 text-blue-600' :
-                index === 1 ? 'bg-purple-100 text-purple-600' :
-                index === 2 ? 'bg-pink-100 text-pink-600' :
-                'bg-amber-100 text-amber-600'
-              }`}>
+              <div className="p-3 rounded-lg bg-slate-100 text-slate-700">
                 {getTherapeuticIcon(area.name)}
               </div>
               <span className="badge badge-info">{area.activeTrials} trials</span>
@@ -117,8 +112,8 @@ const Dashboard = () => {
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
               />
               <Legend />
-              <Bar dataKey="patients" fill="#0ea5e9" name="Patients" radius={[8, 8, 0, 0]} />
-              <Bar dataKey="trials" fill="#8b5cf6" name="Active Trials" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="patients" fill="#475569" name="Patients" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="trials" fill="#64748b" name="Active Trials" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -159,13 +154,13 @@ const Dashboard = () => {
                 contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                 formatter={(value) => `${value}%`}
               />
-              <Bar dataKey="value" fill="#10b981" radius={[0, 8, 8, 0]}>
+              <Bar dataKey="value" fill="#475569" radius={[0, 8, 8, 0]}>
                 {outcomeData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={
-                    entry.name === 'Response Rate' ? '#10b981' :
-                    entry.name === 'QoL Improvement' ? '#0ea5e9' :
-                    entry.name === 'Adverse Events' ? '#f59e0b' :
-                    '#ef4444'
+                    entry.name === 'Response Rate' ? '#475569' :
+                    entry.name === 'QoL Improvement' ? '#64748b' :
+                    entry.name === 'Adverse Events' ? '#94a3b8' :
+                    '#cbd5e1'
                   } />
                 ))}
               </Bar>
@@ -186,8 +181,8 @@ const Dashboard = () => {
               <PolarGrid stroke="#e2e8f0" />
               <PolarAngleAxis dataKey="drug" tick={{ fontSize: 11 }} />
               <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10 }} />
-              <Radar name="Efficacy" dataKey="efficacy" stroke="#0ea5e9" fill="#0ea5e9" fillOpacity={0.3} />
-              <Radar name="Safety" dataKey="safety" stroke="#10b981" fill="#10b981" fillOpacity={0.3} />
+              <Radar name="Efficacy" dataKey="efficacy" stroke="#475569" fill="#475569" fillOpacity={0.3} />
+              <Radar name="Safety" dataKey="safety" stroke="#64748b" fill="#64748b" fillOpacity={0.3} />
               <Legend />
               <Tooltip />
             </RadarChart>
@@ -195,10 +190,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="card bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+      <div className="card bg-slate-50 border-slate-200">
         <div className="flex items-start space-x-4">
-          <div className="bg-amber-100 p-3 rounded-lg">
-            <AlertCircle className="w-6 h-6 text-amber-600" />
+          <div className="bg-slate-200 p-3 rounded-lg">
+            <AlertCircle className="w-6 h-6 text-slate-600" />
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-slate-900 mb-2">Key Insights</h3>

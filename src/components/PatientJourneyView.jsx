@@ -18,13 +18,7 @@ const PatientJourneyView = () => {
   }
 
   const getTherapeuticColor = (area) => {
-    switch (area) {
-      case 'oncology': return 'from-blue-500 to-indigo-600'
-      case 'neurology': return 'from-purple-500 to-pink-600'
-      case 'cardiology': return 'from-pink-500 to-rose-600'
-      case 'immunology': return 'from-amber-500 to-orange-600'
-      default: return 'from-slate-500 to-slate-600'
-    }
+    return 'from-slate-600 to-slate-700'
   }
 
   return (
@@ -225,45 +219,24 @@ const PatientJourneyView = () => {
               </div>
             </div>
 
-            <div className="card">
-              <h3 className="card-header">Predicted Outcomes</h3>
-              <div className="space-y-4">
-                {Object.entries(selectedPatient.predictedOutcome).map(([key, value]) => {
-                  if (key === 'confidence') return null
-                  return (
-                    <div key={key} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-                      <div className="text-sm text-slate-600 mb-2 capitalize">
-                        {key.replace(/([A-Z])/g, ' $1').trim()}
-                      </div>
-                      <div className="flex items-end justify-between">
-                        <div className="text-2xl font-bold text-slate-900">
-                          {typeof value === 'number' ? `${value}%` : value}
-                        </div>
-                        <Heart className="w-5 h-5 text-blue-500" />
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
           </div>
 
-          <div className="card bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
+          <div className="card bg-slate-50 border-slate-200">
             <div className="flex items-start space-x-4">
-              <div className="bg-emerald-100 p-3 rounded-lg">
-                <TrendingUp className="w-6 h-6 text-emerald-600" />
+              <div className="bg-slate-200 p-3 rounded-lg">
+                <TrendingUp className="w-6 h-6 text-slate-700" />
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">Clinical Insights</h3>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/60 rounded-lg p-4">
+                  <div className="bg-white rounded-lg p-4 border border-slate-200">
                     <div className="text-sm text-slate-600 mb-1">Treatment Duration</div>
                     <div className="text-xl font-bold text-slate-900">{selectedPatient.timeline.length} months</div>
                     <div className="text-xs text-slate-500 mt-1">Continuous monitoring</div>
                   </div>
-                  <div className="bg-white/60 rounded-lg p-4">
+                  <div className="bg-white rounded-lg p-4 border border-slate-200">
                     <div className="text-sm text-slate-600 mb-1">Quality of Life Change</div>
-                    <div className="text-xl font-bold text-emerald-600">
+                    <div className="text-xl font-bold text-slate-700">
                       +{selectedPatient.timeline[selectedPatient.timeline.length - 1].quality - selectedPatient.timeline[0].quality} points
                     </div>
                     <div className="text-xs text-slate-500 mt-1">Significant improvement</div>

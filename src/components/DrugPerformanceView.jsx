@@ -2,20 +2,21 @@ import { useState } from 'react'
 import { Pill, TrendingUp, AlertCircle, DollarSign, Users, Activity } from 'lucide-react'
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts'
 import { drugPerformanceData } from '../data/syntheticData'
+import DrugForecastPanel from './DrugForecastPanel'
 
 const DrugPerformanceView = () => {
   const [selectedDrug, setSelectedDrug] = useState(drugPerformanceData[0])
 
   const getDrugColor = (index) => {
-    const colors = ['#0ea5e9', '#8b5cf6', '#ec4899', '#f59e0b']
+    const colors = ['#475569', '#64748b', '#94a3b8', '#cbd5e1']
     return colors[index % colors.length]
   }
 
   return (
     <div className="space-y-6">
-      <div className="card bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-        <h2 className="text-3xl font-bold mb-2">Drug Performance Analytics</h2>
-        <p className="text-indigo-100 text-lg">
+      <div className="card bg-white border border-slate-200">
+        <h2 className="text-3xl font-bold mb-2 text-slate-900">Drug Performance Analytics</h2>
+        <p className="text-slate-600 text-lg">
           Comprehensive analysis of treatment efficacy, safety profiles, and real-world outcomes across therapeutic areas
         </p>
       </div>
@@ -27,7 +28,7 @@ const DrugPerformanceView = () => {
             onClick={() => setSelectedDrug(drug)}
             className={`text-left p-4 rounded-lg border-2 transition-all ${
               selectedDrug.drugName === drug.drugName
-                ? 'border-indigo-500 bg-indigo-50'
+                ? 'border-slate-500 bg-slate-50'
                 : 'border-slate-200 bg-white hover:border-slate-300'
             }`}
           >
@@ -49,27 +50,27 @@ const DrugPerformanceView = () => {
       {selectedDrug && (
         <>
           <div className="grid grid-cols-3 gap-6">
-            <div className="card bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+            <div className="card bg-slate-50 border-slate-200">
               <div className="flex items-center justify-between mb-4">
-                <Users className="w-8 h-8 text-blue-600" />
+                <Users className="w-8 h-8 text-slate-600" />
                 <span className="badge badge-info">Active</span>
               </div>
               <div className="text-3xl font-bold text-slate-900 mb-1">{selectedDrug.patientsEnrolled}</div>
               <div className="text-sm text-slate-600">Patients Enrolled</div>
-              <div className="mt-4 pt-4 border-t border-blue-200">
+              <div className="mt-4 pt-4 border-t border-slate-200">
                 <div className="text-xs text-slate-500">Biomarker</div>
                 <div className="text-sm font-semibold text-slate-900">{selectedDrug.biomarker}</div>
               </div>
             </div>
 
-            <div className="card bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
+            <div className="card bg-slate-50 border-slate-200">
               <div className="flex items-center justify-between mb-4">
-                <TrendingUp className="w-8 h-8 text-emerald-600" />
+                <TrendingUp className="w-8 h-8 text-slate-600" />
                 <span className="badge badge-success">Efficacy</span>
               </div>
               <div className="text-3xl font-bold text-slate-900 mb-1">{selectedDrug.responseRate.oneYear}%</div>
               <div className="text-sm text-slate-600">1-Year Response Rate</div>
-              <div className="mt-4 pt-4 border-t border-emerald-200 grid grid-cols-2 gap-2">
+              <div className="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-2">
                 <div>
                   <div className="text-xs text-slate-500">6 Month</div>
                   <div className="text-sm font-semibold text-slate-900">{selectedDrug.responseRate.sixMonth}%</div>
@@ -81,19 +82,21 @@ const DrugPerformanceView = () => {
               </div>
             </div>
 
-            <div className="card bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200">
+            <div className="card bg-slate-50 border-slate-200">
               <div className="flex items-center justify-between mb-4">
-                <DollarSign className="w-8 h-8 text-purple-600" />
+                <DollarSign className="w-8 h-8 text-slate-600" />
                 <span className="badge badge-info">Value</span>
               </div>
               <div className="text-3xl font-bold text-slate-900 mb-1">${(selectedDrug.costEffectiveness.costPerQaly / 1000).toFixed(0)}K</div>
               <div className="text-sm text-slate-600">Cost per QALY</div>
-              <div className="mt-4 pt-4 border-t border-purple-200">
+              <div className="mt-4 pt-4 border-t border-slate-200">
                 <div className="text-xs text-slate-500">QALY Gained</div>
                 <div className="text-sm font-semibold text-slate-900">{selectedDrug.costEffectiveness.qaly} years</div>
               </div>
             </div>
           </div>
+
+          <DrugForecastPanel drugData={selectedDrug} />
 
           <div className="grid grid-cols-2 gap-6">
             <div className="card">
@@ -111,7 +114,7 @@ const DrugPerformanceView = () => {
                     contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                     formatter={(value) => `${value}%`}
                   />
-                  <Area type="monotone" dataKey="rate" stroke="#0ea5e9" fill="#0ea5e9" fillOpacity={0.3} strokeWidth={3} />
+                  <Area type="monotone" dataKey="rate" stroke="#475569" fill="#475569" fillOpacity={0.3} strokeWidth={3} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -129,8 +132,8 @@ const DrugPerformanceView = () => {
                       formatter={(value) => `${value}%`}
                     />
                     <Legend />
-                    <Line type="monotone" dataKey="observed" stroke="#10b981" strokeWidth={3} name="Observed" dot={{ r: 5 }} />
-                    <Line type="monotone" dataKey="predicted" stroke="#ef4444" strokeWidth={2} strokeDasharray="5 5" name="AI-Predicted" dot={{ r: 4 }} />
+                    <Line type="monotone" dataKey="observed" stroke="#475569" strokeWidth={3} name="Observed" dot={{ r: 5 }} />
+                    <Line type="monotone" dataKey="predicted" stroke="#94a3b8" strokeWidth={2} strokeDasharray="5 5" name="AI-Predicted" dot={{ r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -148,8 +151,8 @@ const DrugPerformanceView = () => {
                       contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                     />
                     <Legend />
-                    <Bar dataKey="relapseRate" fill="#10b981" name="Treatment" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="placeboRate" fill="#ef4444" name="Placebo" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="relapseRate" fill="#475569" name="Treatment" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="placeboRate" fill="#cbd5e1" name="Placebo" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -167,7 +170,7 @@ const DrugPerformanceView = () => {
                       contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                       formatter={(value) => `${value}%`}
                     />
-                    <Bar dataKey="value" fill="#0ea5e9" radius={[0, 8, 8, 0]} />
+                    <Bar dataKey="value" fill="#475569" radius={[0, 8, 8, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -186,10 +189,10 @@ const DrugPerformanceView = () => {
                       formatter={(value) => `${value}%`}
                     />
                     <Legend />
-                    <Bar dataKey="acr20" fill="#0ea5e9" name="ACR20" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="acr50" fill="#8b5cf6" name="ACR50" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="acr70" fill="#ec4899" name="ACR70" radius={[8, 8, 0, 0]} />
-                    <Bar dataKey="remission" fill="#10b981" name="Remission" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="acr20" fill="#475569" name="ACR20" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="acr50" fill="#64748b" name="ACR50" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="acr70" fill="#94a3b8" name="ACR70" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="remission" fill="#cbd5e1" name="Remission" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -208,8 +211,8 @@ const DrugPerformanceView = () => {
                       contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                     />
                     <Legend />
-                    <Line yAxisId="left" type="monotone" dataKey="ntprobnp" stroke="#ef4444" strokeWidth={2} name="NT-proBNP" dot={{ r: 4 }} />
-                    <Line yAxisId="right" type="monotone" dataKey="ef" stroke="#10b981" strokeWidth={2} name="Ejection Fraction %" dot={{ r: 4 }} />
+                    <Line yAxisId="left" type="monotone" dataKey="ntprobnp" stroke="#475569" strokeWidth={2} name="NT-proBNP" dot={{ r: 4 }} />
+                    <Line yAxisId="right" type="monotone" dataKey="ef" stroke="#94a3b8" strokeWidth={2} name="Ejection Fraction %" dot={{ r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -228,9 +231,9 @@ const DrugPerformanceView = () => {
                       contentStyle={{ backgroundColor: '#fff', border: '1px solid #e2e8f0', borderRadius: '8px' }}
                     />
                     <Legend />
-                    <Line yAxisId="left" type="monotone" dataKey="das28" stroke="#f59e0b" strokeWidth={2} name="DAS28 Score" dot={{ r: 4 }} />
-                    <Line yAxisId="left" type="monotone" dataKey="crp" stroke="#ef4444" strokeWidth={2} name="CRP (mg/L)" dot={{ r: 4 }} />
-                    <Line yAxisId="right" type="monotone" dataKey="haq" stroke="#8b5cf6" strokeWidth={2} name="HAQ Score" dot={{ r: 4 }} />
+                    <Line yAxisId="left" type="monotone" dataKey="das28" stroke="#475569" strokeWidth={2} name="DAS28 Score" dot={{ r: 4 }} />
+                    <Line yAxisId="left" type="monotone" dataKey="crp" stroke="#64748b" strokeWidth={2} name="CRP (mg/L)" dot={{ r: 4 }} />
+                    <Line yAxisId="right" type="monotone" dataKey="haq" stroke="#94a3b8" strokeWidth={2} name="HAQ Score" dot={{ r: 4 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -249,16 +252,16 @@ const DrugPerformanceView = () => {
                   formatter={(value) => `${value}%`}
                 />
                 <Legend />
-                <Bar dataKey="incidence" fill="#f59e0b" name="All Grades" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="grade3Plus" fill="#ef4444" name="Grade 3+" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="incidence" fill="#64748b" name="All Grades" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="grade3Plus" fill="#475569" name="Grade 3+" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
 
           <div className="grid grid-cols-3 gap-6">
-            <div className="card bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200">
+            <div className="card bg-slate-50 border-slate-200">
               <div className="flex items-center space-x-3 mb-4">
-                <Activity className="w-6 h-6 text-blue-600" />
+                <Activity className="w-6 h-6 text-slate-600" />
                 <h3 className="text-lg font-semibold text-slate-900">Cost-Effectiveness</h3>
               </div>
               <div className="space-y-3">
