@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { User, Calendar, Activity, TrendingUp, AlertTriangle, CheckCircle, Clock, Heart } from 'lucide-react'
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Bar } from 'recharts'
 import { patientJourneys } from '../data/syntheticData'
+import AIPredictionPanel from './AIPredictionPanel'
 
 const PatientJourneyView = () => {
   const [selectedPatient, setSelectedPatient] = useState(patientJourneys[0])
@@ -137,6 +138,8 @@ const PatientJourneyView = () => {
               <p className="text-slate-700 leading-relaxed">{selectedPatient.narrative}</p>
             </div>
           </div>
+
+          <AIPredictionPanel patientData={selectedPatient} />
 
           <div className="grid grid-cols-2 gap-6">
             <div className="card">
