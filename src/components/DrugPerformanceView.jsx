@@ -3,6 +3,7 @@ import { Pill, TrendingUp, AlertCircle, DollarSign, Users, Activity } from 'luci
 import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { drugPerformanceData } from '../data/syntheticData'
 import DrugForecastPanelTest from './DrugForecastPanelTest'
+import SurvivalCurveChart from './SurvivalCurveChart'
 
 const DrugPerformanceView = () => {
   const [selectedDrug, setSelectedDrug] = useState(drugPerformanceData[0])
@@ -97,6 +98,8 @@ const DrugPerformanceView = () => {
           </div>
 
           {selectedDrug && <DrugForecastPanelTest drugData={selectedDrug} />}
+
+          {selectedDrug && <SurvivalCurveChart drugData={selectedDrug} />}
 
           <div className="grid grid-cols-2 gap-6">
             <div className="card">

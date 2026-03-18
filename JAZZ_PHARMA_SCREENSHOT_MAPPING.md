@@ -131,31 +131,100 @@ Confirm patient details before diving into timeline.
 
 ---
 
-### Screenshot 8: Treatment Timeline Chart
-**Captures:** Line chart showing patient journey over time
+### Screenshot 8: Treatment Timeline Chart ⭐ CRITICAL FOR USER STORY 2
+**Captures:** Multi-line chart showing patient journey over time (left side of patient detail view)
+
 **Shows:**
-- Tumor size reduction (67% shrinkage)
-- CA 15-3 biomarker levels
-- Quality of life scores
-- Month-over-month evolution
+- **Tumor Size (red bars):** Decreasing from ~10cm at baseline to ~3cm at month 6
+  - Demonstrates **67% tumor shrinkage** over treatment period
+  - Visual proof of treatment efficacy
+  - Bar chart format shows clear reduction trend
+  
+- **CA 15-3 Biomarker (orange line):** Declining from ~60 U/mL to ~20 U/mL
+  - Cancer Antigen 15-3 is a breast cancer tumor marker
+  - Declining trend confirms biological response to treatment
+  - Correlates with tumor size reduction
+  
+- **Quality of Life (blue line):** Increasing from ~65 to ~80 (scale 0-100)
+  - Patient-reported outcome measure
+  - Shows treatment isn't just shrinking tumor, it's improving patient well-being
+  - Important for Medical Affairs discussions beyond clinical endpoints
+  
+- **X-axis:** Months 0-6 (7-month treatment journey)
+- **Dual Y-axes:** Left for clinical metrics, right for Quality of Life
 
 **Maps to narrative:**
 > "Treatment Timeline chart shows how tumor size, CA 15-3, and quality of life evolved month over month"
 
 **Maps to talking point:**
 > "This is the type of longitudinal patient data that sits inside Jazz's observational study"
+> "The platform structures it around patient variables and outcomes (step 2 of the proposed workflow)"
 
 **How to use in demo:**
-Walk through the 7-month journey, pointing to tumor shrinkage and biomarker trends.
+"Over this 7-month journey, we see three critical signals: First, tumor size decreased by 67% from 10cm to 3cm. Second, the CA 15-3 biomarker dropped from 60 to 20, confirming biological response. Third, quality of life improved from 65 to 80, showing the patient is not just responding clinically but feeling better. This is the longitudinal data structure that enables predictive modeling."
+
+**Why this matters for Jazz:**
+- Demonstrates multi-dimensional longitudinal tracking (not just snapshots)
+- Shows both objective (tumor size, biomarker) and subjective (QoL) measures
+- This type of structured temporal data is what feeds the AI prediction models
+- Validates that the observational study captures the signals needed for outcome modeling
+
+**Technical note:**
+The chart uses dual Y-axes to show different scales - clinical metrics (0-60) on left, QoL (0-100) on right. This is standard practice in clinical data visualization.
 
 ---
 
-### Screenshot 9: Biomarker Profile Section
-**Captures:** Biomarker cards/panel
+### Screenshot 9: Biomarker Profile Section ⭐ CRITICAL FOR USER STORY 2
+**Captures:** Biomarker panel (right side of patient detail view)
+
 **Shows:**
-- HER2 Score: 3
-- ER/PR: Positive
-- Ki67: 28%
+- **HER2 Score: 3**
+  - HER2 (Human Epidermal Growth Factor Receptor 2) amplification status
+  - Score of 3 = Strongly positive (scale 0-3)
+  - Confirms patient is candidate for HER2-targeted therapy (Trastuzumab + Pertuzumab)
+  - This is THE key biomarker for this patient's treatment selection
+  
+- **ER Status: Positive**
+  - Estrogen Receptor status
+  - Positive = tumor growth is driven by estrogen
+  - Indicates potential benefit from hormone therapy
+  - Important for combination therapy decisions
+  
+- **PR Status: Positive**
+  - Progesterone Receptor status
+  - Positive = additional hormone therapy target
+  - ER+/PR+ tumors generally have better prognosis
+  
+- **Ki67: 28%**
+  - Proliferation marker (percentage of dividing cells)
+  - 28% indicates moderately aggressive tumor
+  - <20% = low proliferation, 20-30% = intermediate, >30% = high
+  - Helps predict treatment response and recurrence risk
+  
+- **Pdl1: Negative**
+  - PD-L1 (Programmed Death-Ligand 1) expression
+  - Negative = not candidate for checkpoint inhibitor immunotherapy
+  - Important for treatment exclusion decisions
+
+**Maps to narrative:**
+> "biomarker profile (HER2 Score 3, ER/PR Positive, Ki67 28%)"
+
+**Maps to talking point:**
+> "The platform structures it around patient variables and outcomes (step 2 of the proposed workflow)"
+> "Traceability: every prediction links back to the patient's actual biomarker and treatment data"
+
+**How to use in demo:**
+"Her biomarker profile shows HER2 Score 3, making her an ideal candidate for HER2-targeted therapy. She's also ER and PR positive, opening hormone therapy options. Ki67 at 28% indicates intermediate proliferation. This structured biomarker data is exactly what feeds into the predictive model - when the AI generates outcome predictions, it's analyzing patterns from patients with similar biomarker profiles."
+
+**Why this matters for Jazz:**
+- Shows how the platform structures molecular/genetic data for each patient
+- Demonstrates biomarker-driven patient stratification (not all patients are the same)
+- This granular data enables the AI to make predictions based on patient subgroups
+- Validates that predictions aren't generic - they're based on specific biomarker patterns
+- Essential for credible predictive modeling (Jazz's core question)
+
+**Clinical context:**
+HER2+ breast cancer represents ~20% of cases. The combination of HER2+/ER+/PR+ is a favorable profile with multiple treatment options. The platform captures this complexity and uses it for modeling.
 
 **Maps to narrative:**
 > "biomarker profile (HER2 Score 3, ER/PR Positive, Ki67 28%)"
@@ -168,18 +237,65 @@ Show how biomarkers are structured and tracked for each patient.
 
 ---
 
-### Screenshot 10: Adverse Events Panel
-**Captures:** Adverse events list
+### Screenshot 10: Adverse Events Panel ⭐ CRITICAL FOR USER STORY 2
+**Captures:** Adverse events section (bottom left of patient detail view)
+
 **Shows:**
-- Nausea: Grade 1, Resolved
-- Fatigue: Grade 2, Ongoing
-- Peripheral Neuropathy: Grade 2, Resolved
+- **Mild Nausea**
+  - Grade: 1 (Mild severity on CTCAE scale 1-5)
+  - Status: **RESOLVED** (green badge)
+  - Icon: ✓ Green checkmark indicating resolution
+  - Timeline: Occurred early in treatment, resolved with antiemetics
+  - Clinical significance: Common with chemotherapy, manageable, no treatment modification needed
+  
+- **Fatigue**
+  - Grade: 2 (Moderate severity on CTCAE scale)
+  - Status: **ONGOING** (orange badge)
+  - Icon: ⚠️ Warning symbol indicating active monitoring
+  - Timeline: Persistent throughout treatment
+  - Clinical significance: Grade 2 = interferes with daily activities but not debilitating
+  - Management: Under active monitoring, may require dose adjustment if worsens to Grade 3
+  
+- **Peripheral Neuropathy**
+  - Grade: 1 (Mild severity)
+  - Status: **RESOLVED** (green badge)
+  - Icon: ✓ Green checkmark indicating resolution
+  - Timeline: Developed mid-treatment, resolved after dose modification
+  - Clinical significance: Common with taxane-based chemotherapy (Docetaxel), reversible
+
+**CTCAE Grading Context:**
+- Grade 1: Mild, asymptomatic or mild symptoms
+- Grade 2: Moderate, minimal/local intervention indicated
+- Grade 3: Severe, medically significant but not life-threatening
+- Grade 4: Life-threatening consequences
+- Grade 5: Death related to AE
 
 **Maps to narrative:**
 > "adverse events (mild nausea resolved, fatigue ongoing, peripheral neuropathy resolved)"
 
+**Maps to talking point:**
+> "This is the type of longitudinal patient data that sits inside Jazz's observational study"
+> "Adverse Event Profile adds the safety dimension — modeling isn't just about efficacy but also about understanding evolving risk"
+
 **How to use in demo:**
-Show safety tracking alongside efficacy data.
+"Safety tracking shows three adverse events: Mild nausea at Grade 1 resolved with standard antiemetics. Peripheral neuropathy at Grade 1 also resolved, likely after dose adjustment. Fatigue at Grade 2 is ongoing but manageable - this is important because it shows the platform tracks not just efficacy but also tolerability over time. When we model long-term outcomes, we're also modeling safety trajectories - will this Grade 2 fatigue persist, worsen, or resolve? This is critical data for Medical Affairs discussions."
+
+**Why this matters for Jazz:**
+- **Safety is as important as efficacy** for real-world outcomes
+- Shows the platform tracks **temporal resolution** of AEs (not just occurrence)
+- Demonstrates **granular severity tracking** (CTCAE grading)
+- **Active vs resolved status** shows dynamic monitoring
+- This safety data feeds into predictive models for long-term tolerability
+- Critical for Medical Affairs to discuss benefit-risk profiles with clinicians
+
+**Clinical context:**
+- Nausea/fatigue/neuropathy are expected AEs for Trastuzumab + Pertuzumab + Docetaxel regimen
+- 2 out of 3 resolved = good tolerability profile
+- Grade 2 ongoing fatigue is manageable and doesn't typically require treatment discontinuation
+- This AE profile supports continued therapy and favorable long-term projections
+
+**Forecasting opportunity:**
+Could add: "Predicted fatigue resolution: Month 8-10 (confidence: 65%)" or "Neuropathy recurrence risk: 12% if treatment continues beyond 12 months"
 
 ---
 

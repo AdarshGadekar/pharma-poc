@@ -61,7 +61,7 @@ const DrugForecastPanelTest = ({ drugData }) => {
           <div>
             <h3 className="text-xl font-bold text-slate-900">AI-Generated Efficacy Hypothesis</h3>
             <p className="text-sm text-slate-600">
-              ML model trained on publicly available clinical trial data
+              Forecasting model trained on publicly available clinical trial data
             </p>
           </div>
         </div>
@@ -81,7 +81,10 @@ const DrugForecastPanelTest = ({ drugData }) => {
           <div className="text-3xl font-bold text-slate-900 mb-2">
             {forecast.threeYearPrediction.toFixed(1)}%
           </div>
-          <p className="text-xs text-slate-500">Projected response rate</p>
+          <p className="text-xs text-slate-500 mb-3">Projected response rate at 36 months</p>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Based on observed 1-year and 2-year efficacy trends, the model projects {forecast.threeYearPrediction.toFixed(1)}% of patients will maintain clinical response at 3 years.
+          </p>
         </div>
         
         <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
@@ -91,7 +94,10 @@ const DrugForecastPanelTest = ({ drugData }) => {
           <div className="text-3xl font-bold text-slate-900 mb-2">
             {forecast.fiveYearPrediction.toFixed(1)}%
           </div>
-          <p className="text-xs text-slate-500">Long-term efficacy</p>
+          <p className="text-xs text-slate-500 mb-3">Long-term efficacy projection at 60 months</p>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            Extrapolating temporal efficacy decline patterns, the model estimates {forecast.fiveYearPrediction.toFixed(1)}% sustained response at 5 years, accounting for expected attrition.
+          </p>
         </div>
         
         <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
@@ -101,7 +107,12 @@ const DrugForecastPanelTest = ({ drugData }) => {
           <div className="text-2xl font-bold text-slate-900 mb-2">
             {forecast.trendAnalysis}
           </div>
-          <p className="text-xs text-slate-500">Efficacy trajectory</p>
+          <p className="text-xs text-slate-500 mb-3">Overall efficacy trajectory pattern</p>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            {forecast.trendAnalysis === 'Declining' 
+              ? 'Response rates show expected temporal decline consistent with disease progression and treatment resistance patterns observed in similar therapies.'
+              : 'Response rates demonstrate stability over time, suggesting durable treatment benefit with minimal efficacy degradation.'}
+          </p>
         </div>
       </div>
 
@@ -112,7 +123,7 @@ const DrugForecastPanelTest = ({ drugData }) => {
         </h4>
         <div className="space-y-3 text-xs text-slate-700 leading-relaxed">
           <p>
-            <strong>Model Training:</strong> Machine learning model trained on historical drug efficacy data from multi-year clinical trials and real-world evidence studies.
+            <strong>Model Training:</strong> AI forecasting model trained on historical drug efficacy data from multi-year clinical trials and real-world evidence studies.
           </p>
           <p>
             <strong>Data Sources:</strong>

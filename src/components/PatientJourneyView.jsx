@@ -3,6 +3,7 @@ import { User, Calendar, Activity, TrendingUp, AlertTriangle, CheckCircle, Clock
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Bar } from 'recharts'
 import { patientJourneys } from '../data/syntheticData'
 import AIPredictionPanel from './AIPredictionPanel'
+import ForecastInsightsPanel from './ForecastInsightsPanel'
 
 const PatientJourneyView = () => {
   const [selectedPatient, setSelectedPatient] = useState(patientJourneys[0])
@@ -134,6 +135,8 @@ const PatientJourneyView = () => {
           </div>
 
           <AIPredictionPanel patientData={selectedPatient} />
+
+          <ForecastInsightsPanel patientData={selectedPatient} />
 
           <div className="grid grid-cols-2 gap-6">
             <div className="card">
