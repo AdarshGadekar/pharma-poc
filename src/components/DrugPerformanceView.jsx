@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Pill, TrendingUp, AlertCircle, DollarSign, Users, Activity } from 'lucide-react'
-import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ScatterChart, Scatter, ZAxis } from 'recharts'
+import { LineChart, Line, BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { drugPerformanceData } from '../data/syntheticData'
-import DrugForecastPanel from './DrugForecastPanel'
+import DrugForecastPanelTest from './DrugForecastPanelTest'
 
 const DrugPerformanceView = () => {
   const [selectedDrug, setSelectedDrug] = useState(drugPerformanceData[0])
@@ -96,7 +96,7 @@ const DrugPerformanceView = () => {
             </div>
           </div>
 
-          <DrugForecastPanel drugData={selectedDrug} />
+          {selectedDrug && <DrugForecastPanelTest drugData={selectedDrug} />}
 
           <div className="grid grid-cols-2 gap-6">
             <div className="card">
@@ -280,7 +280,7 @@ const DrugPerformanceView = () => {
               </div>
             </div>
 
-            <div className="card bg-gradient-to-br from-emerald-50 to-teal-50 border-emerald-200">
+            <div className="card bg-slate-50 border-slate-200">
               <div className="flex items-center space-x-3 mb-4">
                 <TrendingUp className="w-6 h-6 text-emerald-600" />
                 <h3 className="text-lg font-semibold text-slate-900">Efficacy Summary</h3>
@@ -301,7 +301,7 @@ const DrugPerformanceView = () => {
               </div>
             </div>
 
-            <div className="card bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+            <div className="card bg-slate-50 border-slate-200">
               <div className="flex items-center space-x-3 mb-4">
                 <AlertCircle className="w-6 h-6 text-amber-600" />
                 <h3 className="text-lg font-semibold text-slate-900">Safety Profile</h3>
