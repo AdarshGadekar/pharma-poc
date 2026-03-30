@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
-import { Shield, Network, FileSearch, BookOpen, AlertTriangle, ChevronRight, ChevronLeft, Activity, Play, RotateCcw, Info, X } from 'lucide-react'
+import { Shield, Network, FileSearch, BookOpen, AlertTriangle, ChevronRight, ChevronLeft, Activity, Play, RotateCcw, Info, X, Database } from 'lucide-react'
 import SignalGraph from './components/SignalGraph'
 import CaseExplorer from './components/CaseExplorer'
 import EvidencePanel from './components/EvidencePanel'
 import SignalAssessment from './components/SignalAssessment'
 import { demoSteps, signalData } from './data/pvData'
+import PortfolioPipeline from './components/PortfolioPipeline'
 
 const TABS = [
   { id: 'graph', label: 'Signal Graph', icon: Network, desc: 'Knowledge graph — drug to signal' },
   { id: 'cases', label: 'Case Analysis', icon: FileSearch, desc: 'Individual case safety reports' },
   { id: 'evidence', label: 'Evidence Review', icon: BookOpen, desc: 'Supporting & contradicting literature' },
   { id: 'signal', label: 'Signal Assessment', icon: Shield, desc: 'PRR metrics, traceability, recommendation' },
+  { id: 'pipeline', label: 'Portfolio & Pipeline', icon: Database, desc: 'Drug portfolio, data model & Neo4j injection plan' },
 ]
 
 function DemoStepGuide({ step, onNext, onPrev, onClose }) {
@@ -232,6 +234,10 @@ export default function App() {
 
           {activeTab === 'signal' && (
             <SignalAssessment />
+          )}
+
+          {activeTab === 'pipeline' && (
+            <PortfolioPipeline />
           )}
         </div>
 
