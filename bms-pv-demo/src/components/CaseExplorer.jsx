@@ -1,7 +1,39 @@
 import { useState, useMemo } from 'react'
-import { Filter, AlertTriangle, User, Calendar, MapPin, Pill, ChevronDown, ChevronUp, Activity } from 'lucide-react'
+import { Filter, AlertTriangle, User, Calendar, MapPin, Pill, ChevronDown, ChevronUp, Activity, FileText } from 'lucide-react'
 import { cases } from '../data/pvData'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
+
+const INDICATION_LABELS = {
+  AF: 'non-valvular atrial fibrillation (AF)',
+  VTE: 'VTE treatment',
+  DVT_PREV: 'DVT prevention',
+}
+
+function joinList(arr) {
+  if (!arr || arr.length === 0) return null
+  if (arr.length === 1) return arr[0]
+  return arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1]
+}
+
+function buildNarrative(c) {
+  const gender = c.gender === 'F' ? 'female' : 'male'
+  const indication = INDICATION_LABELS[c.indication] || c.indication
+  const comorbStr = joinList(c.comorbidities)
+  const medStr = joinList(c.concomitantMeds)
+  const outcomeLabel =
+    c.outcome === 'not recovered' ? 'not recovered at time of reporting'
+    : c.outcome === 'recovering'  ? 'recovering at time of reporting'
+    : c.outcome
+
+  return [
+    `A ${c.age}-year-old ${gender} patient from ${c.country} was prescribed apixaban for ${indication}.`,
+    comorbStr ? `Medical history included ${comorbStr}.` : null,
+    medStr    ? `Concomitant medications: ${medStr}.` : null,
+    `On ${c.dateReported}, the patient reported ${c.event.toLowerCase()} (${c.eventCode}).`,
+    `The event was classified as ${c.severity} — seriousness category: ${c.seriousnessCategory}.`,
+    `Outcome: ${outcomeLabel}. Reported by a ${c.source}.`,
+  ].filter(Boolean).join(' ')
+}
 
 const SEVERITY_COLORS = {
   'serious': { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', dot: '#dc2626' },
@@ -83,6 +115,7 @@ function CaseCard({ c, expanded, onToggle }) {
       </div>
 
       {expanded && (
+        <>
         <div className="px-4 pb-4 border-t border-slate-100 pt-3 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
           <div>
             <div className="text-slate-400 font-semibold uppercase tracking-wide mb-1 flex items-center gap-1">
@@ -125,6 +158,17 @@ function CaseCard({ c, expanded, onToggle }) {
             </div>
           </div>
         </div>
+
+        {/* Case Narrative */}
+        <div className="mt-3 pt-3 border-t border-slate-100">
+          <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2 flex items-center gap-1.5">
+            <FileText size={10} /> Case Narrative
+          </div>
+          <p className="text-xs text-slate-600 leading-relaxed border-l-2 border-slate-200 pl-3 italic">
+            {buildNarrative(c)}
+          </p>
+        </div>
+        </>
       )}
     </div>
   )

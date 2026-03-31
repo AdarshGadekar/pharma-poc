@@ -1,5 +1,6 @@
-import { Shield, AlertTriangle, ArrowRight, TrendingUp, FileText, Clock, CheckCircle, Users, BookOpen } from 'lucide-react'
-import { signalData } from '../data/pvData'
+import { useState } from 'react'
+import { Shield, AlertTriangle, ArrowRight, TrendingUp, FileText, Clock, CheckCircle, Users, BookOpen, ChevronDown, ChevronUp } from 'lucide-react'
+import { signalData, cases } from '../data/pvData'
 
 function MetricCard({ label, value, sub, color = '#1d4ed8', note }) {
   return (
@@ -94,6 +95,119 @@ function EvidenceSummaryBar({ supporting, partial, contradicting }) {
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-amber-400" />{partial} Partial</span>
         <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm bg-orange-500" />{contradicting} Contradicting</span>
       </div>
+    </div>
+  )
+}
+
+const ANCHOR = cases.find(c => c.id === 'ICSR-2024-003')
+const SECOND  = cases.find(c => c.id === 'ICSR-2024-001')
+
+function AnchorCasePanel() {
+  const [expanded, setExpanded] = useState(false)
+
+  return (
+    <div className="rounded-xl border border-rose-200 overflow-hidden">
+      {/* Header */}
+      <div className="bg-rose-50 px-5 py-4 flex items-start justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold text-rose-700 bg-rose-100 px-2 py-0.5 rounded-md uppercase tracking-wide">
+              Anchor Case
+            </span>
+            <span className="text-xs font-mono text-rose-500">{ANCHOR?.id}</span>
+            <span className="text-xs text-slate-400">→ links directly to SIG-2024-ELIQUIS-001</span>
+          </div>
+          <h3 className="text-sm font-bold text-slate-800">
+            From Individual Case to Signal — The Patient Behind the PRR
+          </h3>
+          <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+            Every signal starts with an individual. This case was one of 12 GI-bleed reports in the dataset
+            and is representative of the elderly, renally-impaired population driving the signal.
+          </p>
+        </div>
+        <button
+          onClick={() => setExpanded(e => !e)}
+          className="flex-shrink-0 flex items-center gap-1 text-xs font-semibold text-rose-600 hover:text-rose-800 transition-colors mt-0.5"
+        >
+          {expanded ? <><ChevronUp size={14} /> Hide</> : <><ChevronDown size={14} /> Read</>}
+        </button>
+      </div>
+
+      {/* Quick-scan metadata row */}
+      <div className="bg-white px-5 py-3 flex flex-wrap gap-x-6 gap-y-1.5 border-b border-rose-100 text-xs">
+        {[
+          { label: 'Patient',    value: `${ANCHOR?.age}yo ${ANCHOR?.gender === 'F' ? 'Female' : 'Male'} · ${ANCHOR?.country}` },
+          { label: 'Indication', value: 'VTE Treatment' },
+          { label: 'Drug',       value: 'Apixaban 5 mg BID' },
+          { label: 'Event',      value: ANCHOR?.event },
+          { label: 'Severity',   value: ANCHOR?.seriousnessCategory },
+          { label: 'Outcome',    value: ANCHOR?.outcome },
+        ].map(item => (
+          <div key={item.label} className="flex items-center gap-1.5">
+            <span className="text-slate-400 font-semibold">{item.label}:</span>
+            <span className="text-slate-700 font-medium">{item.value}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Full narrative — expandable */}
+      {expanded && (
+        <div className="bg-white px-5 py-4 space-y-4">
+          <div className="text-xs leading-relaxed text-slate-700 space-y-3 border-l-4 border-rose-200 pl-4">
+            <p>
+              A <strong>{ANCHOR?.age}-year-old female</strong> patient from the{' '}
+              <strong>{ANCHOR?.country}</strong> presented with a history of{' '}
+              <strong>{ANCHOR?.comorbidities.join(' and ')}</strong>. She was initiated on apixaban
+              5 mg twice daily for <strong>VTE treatment</strong>. Concomitant medications
+              included <strong>{ANCHOR?.concomitantMeds.join(' and ')}</strong>.
+            </p>
+            <p>
+              On <strong>{ANCHOR?.dateReported}</strong>, approximately 6 weeks after initiation,
+              the patient presented to hospital with haematochezia and epigastric discomfort.
+              Clinical investigation confirmed <strong>gastrointestinal haemorrhage</strong>.
+              Apixaban was immediately discontinued. The patient received supportive care and
+              haemoglobin levels recovered over the following 5 days.
+            </p>
+            <p>
+              The event was classified as <strong>{ANCHOR?.seriousnessCategory}</strong>.
+              Outcome at time of reporting: <strong>{ANCHOR?.outcome}</strong>. The reporting physician
+              assessed causality as <em>possibly related</em> to apixaban, noting that the combination
+              of <strong>CKD Stage 3</strong> (reduced drug clearance) and pre-existing{' '}
+              <strong>GERD</strong> (increased mucosal vulnerability) represented compounding risk
+              factors not adequately captured in standard dose-reduction criteria.
+            </p>
+          </div>
+
+          {/* Signal connection callout */}
+          <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 flex items-start gap-3">
+            <ArrowRight size={14} className="text-amber-600 mt-0.5 flex-shrink-0" />
+            <div className="text-xs text-amber-800 leading-relaxed">
+              <span className="font-bold">Signal link:</span> This case contributes to the PRR of{' '}
+              <strong>2.41</strong> for Eliquis + GI/Major Haemorrhage. It sits within the elderly,
+              renally-impaired sub-population that drives the signal hypothesis — the same population
+              targeted by the recommended Benefit-Risk Assessment above.
+            </div>
+          </div>
+
+          {/* Second case mini-callout */}
+          <div className="border border-slate-200 rounded-lg px-4 py-3">
+            <div className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-2">
+              Pattern Reinforcement — Second Case ({SECOND?.id})
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              A <strong>{SECOND?.age}-year-old female</strong> from the{' '}
+              <strong>{SECOND?.country}</strong>, prescribed apixaban for{' '}
+              <strong>atrial fibrillation</strong>, with{' '}
+              <strong>{SECOND?.comorbidities.join(' and ')}</strong>.
+              Reported <strong>{SECOND?.event}</strong> —{' '}
+              classified as <strong>{SECOND?.seriousnessCategory}</strong>, outcome:{' '}
+              <strong>{SECOND?.outcome}</strong>. Both cases share the same pattern:
+              elderly female, renal impairment, serious haemorrhagic event requiring hospitalisation.
+              This pattern is the signal.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -226,6 +340,8 @@ export default function SignalAssessment() {
           </div>
         </div>
       </div>
+
+      <AnchorCasePanel />
 
       <div className="bg-slate-800 text-white rounded-xl p-5">
         <div className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-2">Why this matters</div>
